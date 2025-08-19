@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel = "stylesheet" href="css/profilepage.css">
+    <title>Uploads</title>
+</head>
+<body>
+<h1>Uploaded Images</h1>
+<div class="gallery" id="gallery"></div>
+
+<script>
+async function loadImages() {
+  try {
+    const res = await fetch('/uploads');
+    if (!res.ok) throw new Error('Failed to fetch images');
+
+    const images = await res.json();
+    const gallery = document.getElementById('gallery');
+    gallery.innerHTML = '';
+
+    images.forEach(img => {
+      const card = document.createElement('div');
+      card.className = 'card';
+
+      // If you have a separate endpoint to get the actual image by ID
+      const imgURL = `/uploads/${img.id}`;
+
+      card.innerHTML = `
+        <img src="${imgURL}" alt="${img.name}">
+        <h3>${img.name}</h3>
+        <p>Label: ${img.label}</p>
+        <p>Probability: ${(img.confidence * 100).toFixed(2)}%</p>
+      `;
+      gallery.appendChild(card);
+    });
+
+  } catch (err) {
+    console.error(err);
+    document.getElementById('gallery').innerText = 'Failed to load images.';
+  }
+}
+
+//make a navbar
+//add home
+//
+loadImages();
+</script>
+</body>
+</html>
+<!DOCTYPE html>
