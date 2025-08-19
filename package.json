@@ -7,6 +7,8 @@
     "multer": "^2.0.2",
     "mysql": "^2.18.1",
     "mysql2": "^3.14.3",
-    "onnxruntime-node": "^1.22.0-rev"
+    "onnxruntime-node": "^1.22.0-rev",
+    "sqlite3": "^5.1.7",
+    "uuid": "^11.1.0"
   }
 }
