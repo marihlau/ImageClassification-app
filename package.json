@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "@tensorflow-models/mobilenet": "^2.1.1",
+    "@tensorflow/tfjs": "^4.22.0",
+    "express": "^5.1.0",
+    "image-js": "^0.37.0",
+    "multer": "^2.0.2",
+    "mysql": "^2.18.1",
+    "mysql2": "^3.14.3",
+    "onnxruntime-node": "^1.22.0-rev"
+  }
+}
