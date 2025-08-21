@@ -5,7 +5,6 @@ const tf = require('@tensorflow/tfjs');
 const mobilenet = require('@tensorflow-models/mobilenet');
 const mysql = require('mysql2/promise');
 const path = require('path');
-const ort = require('onnxruntime-node');
 const db = require('./persistence');
 const getItems = require('./routes/getItems');
 const addItem = require('./routes/addItem');
