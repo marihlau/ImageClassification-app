@@ -4,7 +4,9 @@ const fs = require('fs');
 const path = require('path');
 
 let db;
-const location = path.join(__dirname, 'database.sqlite');
+//const location = path.join(__dirname, 'database.sqlite');
+const location = process.env.SQLITE_DB_LOCATION || './persistence/database.sqlite';
+
 
 
 async function init() {
