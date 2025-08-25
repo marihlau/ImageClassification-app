@@ -23,8 +23,6 @@ async function loadImages() {
     images.forEach(img => {
       const card = document.createElement('div');
       card.className = 'card';
-
-      // If you have a separate endpoint to get the actual image by ID
       const imgURL = `/uploads/${img.id}`;
 
       card.innerHTML = `

@@ -12,7 +12,6 @@ form.addEventListener('submit', async(e)=>{
         });
 
         if(!res.ok) throw new Error('Upload failed');
-        //const text = await res.text();
         message.innerText = `File uploaded`;
         const messageEl = document.getElementById("message");
         const JSONdata = await res.json();
