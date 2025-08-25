@@ -1,4 +1,6 @@
 node_modules
+uploads
+database.sqlite
 .git
-*.log
-dist
+.gitignore
+.DS_Store
