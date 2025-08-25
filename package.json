@@ -5,9 +5,7 @@
     "express": "^5.1.0",
     "image-js": "^0.37.0",
     "multer": "^2.0.2",
-    "mysql": "^2.18.1",
-    "mysql2": "^3.14.3",
-    "onnxruntime-node": "^1.22.0-rev",
+    "sqlite": "^5.1.1",
     "sqlite3": "^5.1.7",
     "uuid": "^11.1.0"
   }

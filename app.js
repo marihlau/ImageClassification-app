@@ -3,13 +3,13 @@ const express = require('express')
 const multer = require('multer')
 const tf = require('@tensorflow/tfjs');
 const mobilenet = require('@tensorflow-models/mobilenet');
-const mysql = require('mysql2/promise');
+//const mysql = require('mysql2/promise');
 const path = require('path');
-const db = require('./persistence');
 const getItems = require('./routes/getItems');
 const addItem = require('./routes/addItem');
 const deleteItem = require('./routes/deleteItem');
 const {Image} = require ('image-js');
+const { init, getDB } = require('./persistence/sqlite');
 
 //setting up the app using express
 const app = express()
@@ -21,25 +21,42 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/images', getItems);
 app.post('/images', addItem);
 app.delete('/images/:id', deleteItem);
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
 
+let db;
+(async () => {
+  await init();
+  db = getDB();
+})();
 
 //mysql
-const pool = mysql.createPool({
-  host: 'localhost',
-  user: 'root',
-  password: 'databasepassword',
-  database: 'test'
-});
+// const pool = mysql.createPool({
+//   host: 'localhost',
+//   user: 'root',
+//   password: 'databasepassword',
+//   database: 'test'
+// });
 
-// Test database connection
-pool.getConnection()
-  .then(connection => {
-    console.log('✅ MySQL connected successfully');
-    connection.release();
-  })
-  .catch(err => {
-    console.error('MySQL connection failed:', err.message);
-  });
+//Test database connection
+// db.getConnection()
+//   .then(connection => {
+//     console.log('✅ database connected successfully');
+//     connection.release();
+//   })
+//   .catch(err => {
+//     console.error('MySQL connection failed:', err.message);
+//   });
+
+// Insert example
+// await db.run(
+//   'INSERT INTO images (name, image, label, confidence, contentType) VALUES (?, ?, ?, ?, ?)',
+//   [req.file.originalname, req.file.buffer, best.className, best.probability, req.file.mimetype]
+// );
+
+// Select example
+//const rows = await db.all('SELECT id, name, label, confidence FROM images');
+
 
 //uploading the images to memory storage
 // Using Multer for file uploads
@@ -47,8 +64,7 @@ pool.getConnection()
 //   destination: (req, file, cb) => cb(null, 'uploads/'),
 //   filename: (req, file, cb) => cb(null, Date.now() + '-' + file.originalname)
 // });
-const storage = multer.memoryStorage();
-const upload = multer({ storage });
+
 
 //loading the tensorflow MobileNet model
 let model;
@@ -76,12 +92,12 @@ app.post('/uploads', upload.single('image'), async (req, res) => {
       best.probability,
       req.file.mimetype
     ];
-    const [result] = await pool.query(sql, values);
+    const result = await db.run(sql, values);
     
     res.json({ 
       message: "Image uploaded and classified successfully", 
       classification: best,
-      imageId: result.insertId
+      imageId: result.lastID
     });
   } catch (error) {
     console.error("Error processing image:", error);
@@ -93,7 +109,7 @@ app.post('/uploads', upload.single('image'), async (req, res) => {
 //get the image from id
 app.get("/uploads/:id", async (req, res) => {
   try {
-    const [rows] = await pool.query("SELECT * FROM images WHERE id = ?", [
+    const rows = await db.all("SELECT * FROM images WHERE id = ?", [
       req.params.id,
     ]);
 
@@ -119,7 +135,7 @@ app.get("/uploads/:id", async (req, res) => {
 //getting data for all images in database
 app.get('/uploads', async (req, res) => {
   try {
-    const [rows] = await pool.query('SELECT id, name, label, confidence FROM images');
+    const rows = await db.all('SELECT id, name, label, confidence FROM images');
     console.log("Query successful, found", rows.length, "images");
     
     if (rows.length === 0) return res.status(404).json({ message: "No images found." });
