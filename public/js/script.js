@@ -38,4 +38,8 @@ document.getElementById("todatabase").addEventListener("click", () => {
     window.location.href = '/uploads.html';
 });
 
+document.getElementById("tologin").addEventListener("click", () => {
+    window.location.href = '/login.html';
+});
+
 

@@ -4,6 +4,7 @@
     "@tensorflow/tfjs": "^4.22.0",
     "express": "^5.1.0",
     "image-js": "^0.37.0",
+    "jsonwebtoken": "^9.0.2",
     "multer": "^2.0.2",
     "sqlite": "^5.1.1",
     "sqlite3": "^5.1.7",

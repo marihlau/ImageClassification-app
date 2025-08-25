@@ -5,6 +5,7 @@ const tf = require('@tensorflow/tfjs');
 const mobilenet = require('@tensorflow-models/mobilenet');
 //const mysql = require('mysql2/promise');
 const path = require('path');
+const JWT = require("./jwt.js");
 const getItems = require('./routes/getItems');
 const addItem = require('./routes/addItem');
 const deleteItem = require('./routes/deleteItem');
@@ -21,14 +22,28 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/images', getItems);
 app.post('/images', addItem);
 app.delete('/images/:id', deleteItem);
-const storage = multer.memoryStorage();
-const upload = multer({ storage });
+
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 2 * 1024 * 1024 } // 2 MB max
+});
 
 let db;
 (async () => {
   await init();
   db = getDB();
 })();
+
+const users = {
+   CAB432: {
+      password: "supersecret",
+      admin: false,
+   },
+   admin: {
+      password: "admin",
+      admin: true,
+   },
+};
 
 //mysql
 // const pool = mysql.createPool({
@@ -79,7 +94,8 @@ app.post('/uploads', upload.single('image'), async (req, res) => {
     if (!req.file) return res.status(400).send('No file uploaded!');
 
     const image = await Image.load(req.file.buffer);
-    const tensor = tf.browser.fromPixels(image).expandDims(0);
+    const resized = image.resize({ width: 224, height: 224 });
+    const tensor = tf.browser.fromPixels(resized).expandDims(0);
     const predictions = await model.classify(tensor);
     const best = predictions[0];
 
@@ -105,6 +121,20 @@ app.post('/uploads', upload.single('image'), async (req, res) => {
   }
 });
 
+app.post("/login", (req, res) => {
+   // Check the username and password
+   const { username, password } = req.body;
+   const user = users[username];
+
+   if (!user || password !== user.password) {
+      return res.sendStatus(401);
+   }
+
+   // Get a new authentication token and send it back to the client
+   console.log("Successful login by user", username);
+   const token = JWT.generateAccessToken({ username });
+   res.json({ authToken: token });
+});
 
 //get the image from id
 app.get("/uploads/:id", async (req, res) => {
@@ -132,6 +162,7 @@ app.get("/uploads/:id", async (req, res) => {
   }
 });
 
+
 //getting data for all images in database
 app.get('/uploads', async (req, res) => {
   try {
@@ -145,6 +176,25 @@ app.get('/uploads', async (req, res) => {
     console.error("Error code:", error.code);
     res.status(500).json({ error: "Error fetching images", details: error.message });
   }
+});
+
+app.get("/", JWT.authenticateToken, (req, res) => {
+   res.sendFile(path.join(__dirname, "public", "index.html"));
+});
+
+app.get("/admin", JWT.authenticateToken, (req, res) => {
+   // user info added to the request by JWT.authenticateToken
+   // Check user permissions
+   const user = users[req.user.username];
+   
+   if (!user || !user.admin) {
+      // bad user or not admin
+      console.log("Unauthorised user requested admin content.");
+      return res.sendStatus(403);
+   }
+
+   // User permissions verified.
+   res.sendFile(path.join(__dirname, "public", "admin.html"));
 });
 
 module.exports = app
