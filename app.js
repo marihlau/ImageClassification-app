@@ -21,8 +21,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/images', getItems);
 app.post('/images', addItem);
 app.delete('/images/:id', deleteItem);
-const storage = multer.memoryStorage();
-const upload = multer({ storage });
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 2 * 1024 * 1024 } // 2 MB max
+});
 
 let db;
 (async () => {
