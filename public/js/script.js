@@ -1,13 +1,34 @@
-const form = document.getElementById('imageUpload');
-const message = document.getElementById('message');
+//const { use } = require("react");
 
-form.addEventListener('submit', async(e)=>{
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById('imageUpload');
+  const message = document.getElementById('message');
+  const token = localStorage.getItem("authToken"); // get the JWT from login
+  const userStatus = document.getElementById("userStatus");
+  if (!token) {
+    userStatus.innerText = "Not logged in";
+    userStatus.style.color = "red";
+} else {
+    userStatus.innerText = "Logged in";
+    userStatus.style.color = "green";
+}
+
+form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const data = new FormData(form);
 
-    try{
+    if (!token) {
+        alert("You must be logged in to upload files.");
+        window.location.href = "/login.html";
+        return;
+    } 
+
+    try {
         const res = await fetch('/uploads', {
             method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
             body: data
         });
 
@@ -39,4 +60,15 @@ document.getElementById("toDatabase").addEventListener("click", () => {
 
 document.getElementById("toLogin").addEventListener("click", () => {
     window.location.href = '/login.html';
+});
+
+document.getElementById("toHome").addEventListener("click", () => {
+    window.location.href = '/index.html';
+});
+
+document.getElementById("logoutBtn").addEventListener("click", () => {
+    localStorage.removeItem("authToken");
+    window.location.href = '/login.html';
+});
+
 });

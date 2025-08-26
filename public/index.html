@@ -5,10 +5,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE_edge">
     <meta name="viewport" content="width-device-width", initial-scale="1.0">
     <link rel = "stylesheet" href="css/home.css">
+    <link rel = "stylesheet" href="css/navbar.css">
     <title>File Upload</title>
 </head>
 <body>
+    <nav id="navbar">
+        <div id="userStatus"></div>
+        <div id="navButtons">
+            <button id="toHome">Home</button>
+            <button id="toDatabase">Database</button>
+            <button id="toLogin">Login</button>
+            <button id="logoutBtn">Logout</button>
+        </div>
+    </nav>
     <h1>Upload an Image</h1>
+    <div id="userStatus"></div>
+
     <p>
         Upload an image you want to be classified and get information about. 
         This can be done by dragging a file into the container, or klikking on the "velg fil" icon. 
@@ -26,12 +38,6 @@
         <button type="submit">Upload</button>
         <p id="message"></p>
     </form>
-
-    <nav>
-        <button id="toDatabase">Go to Database</button>
-        <button id="toLogin">Go to Login</button>
-    </nav>
-
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <script src = "js/script.js"></script>

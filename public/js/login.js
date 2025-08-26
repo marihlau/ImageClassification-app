@@ -1,36 +1,59 @@
-        
-const form = document.getElementById('loginForm');
+const form = document.getElementById("loginForm");
 
-form.addEventListener('submit', async (e) => {
-    e.preventDefault();
+form.addEventListener("submit", async (e) => {
+  e.preventDefault(); // stop normal form submission
+  const formData = new FormData(form);
 
-    const formData = new FormData(form);
-    const res = await fetch('/login', {
-        method: 'POST',
-        body: formData
+  const user = {
+    username: formData.get("username"),
+    password: formData.get("password"),
+  };
+
+  try {
+    const res = await fetch("/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(user),
     });
 
-    if (res.ok) {
-        window.location.href = '/index.html';
-    } else if (res.status === 401) {
-        alert('Unauthorized: Incorrect username or password');
-    } else if (res.status === 404) {
-        alert('User not found: Please create an account.');
+    const data = await res.json();
+    localStorage.setItem("authToken", data.authToken);
+
+    if (data.admin) {
+        window.location.href = "/admin.html";
     } else {
-        const error = await res.text();
-        alert(error);
+        window.location.href = "/index.html";
     }
+
+    if (!res.ok) throw new Error(data.error || "Login failed");
+
+    // Store JWT token
+    localStorage.setItem("authToken", data.authToken);
+
+    alert("✅ Login successful!");
+    if (data.admin) {
+        window.location.href = "/admin.html";
+    } else {
+        window.location.href = "/index.html";
+    }
+
+  } catch (err) {
+    alert("❌ " + err.message);
+  }
 });
 
-document.getElementById("toDatabase").addEventListener("click", () => {
-    window.location.href = '/database.html';
-});
-
-document.getElementById("toHome").addEventListener("click", () => {
-    window.location.href = '/index.html';
-});
-
+// Navigation buttons
 document.getElementById("toSignUp").addEventListener("click", () => {
-    window.location.href = '/signup.html';
+  window.location.href = "/signup.html";
 });
-    
+document.getElementById("toDatabase").addEventListener("click", () => {
+  window.location.href = "/database.html";
+});
+document.getElementById("toHome").addEventListener("click", () => {
+  window.location.href = "/index.html";
+});
+
+document.getElementById("logoutBtn").addEventListener("click", () => {
+  localStorage.removeItem("authToken");
+  window.location.href = "/login.html";
+});

@@ -4,9 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/login.css">
+    <link rel = "stylesheet" href="css/navbar.css">
     <title>Sign Up</title>
 </head>
 <body>
+    <nav id="navbar">
+        <div id="userStatus"></div>
+        <div id="navButtons">
+            <button id="toHome">Home</button>
+            <button id="toDatabase">Database</button>
+            <button id="toLogin">Login</button>
+            <button id="logoutBtn">Logout</button>
+         </div>
+    </nav>
+
     <div class="container">
         <h1>Sign Up</h1>
         <form id="signUpForm" action="/signup" method="POST" >
@@ -14,11 +25,6 @@
             <input type="password" name="password" placeholder="Password" required>
             <button type="submit">Sign Up</button>
         </form>
-        <nav>
-            <button id="toLogin"> Go to Login</button>
-            <button id="toDatabase">Go to Database</button>
-            <button id="toHome">Go to Home</button>
-        </nav>
     </div>
     <script src="js/signup.js"></script>
 </body>

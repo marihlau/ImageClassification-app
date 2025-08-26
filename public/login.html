@@ -4,9 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/login.css">
+    <link rel = "stylesheet" href="css/navbar.css">
     <title>Login</title>
 </head>
 <body>
+    <nav id="navbar">
+        <div id="userStatus"></div>
+        <div id="navButtons">
+            <button id="toHome">Home</button>
+            <button id="toDatabase">Database</button>
+            <button id="toLogin">Login</button>
+            <button id="logoutBtn">Logout</button>
+        </div>
+    </nav>
+
     <div class="container">
         <h1>Login</h1>
         <form id="loginForm" action="/login" method="POST" >
@@ -15,10 +26,6 @@
             <button type="submit">Login</button>
         </form>
         <button id="toSignUp" class="secondary">Sign Up</button>
-        <nav>
-            <button id="toDatabase">Go to Database</button>
-            <button id="toHome">Go to Home</button>
-        </nav>
     </div>
     <script src="js/login.js"></script>
 </body>

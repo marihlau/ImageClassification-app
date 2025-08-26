@@ -6,4 +6,4 @@ This file is a reference list for parts of my code
 
 - in the file app.js I got help from github copilot to make the correct functions
 
-- copilot helped with the login.css
+- copilot helped with the login.css, navbar.css

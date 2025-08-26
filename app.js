@@ -9,12 +9,17 @@ const addItem = require('./routes/addItem');
 const deleteItem = require('./routes/deleteItem');
 const {Image} = require ('image-js');
 const { init, getDB } = require('./persistence/sqlite');
+const JWT = require("./public/js/jwt.js");
 
 //setting up the app using express
 const app = express()
 
+
 // Using the public folder
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.json());
+
+app.use(express.urlencoded({ extended: true }));
 
 //database routing
 app.get('/images', getItems);
@@ -39,8 +44,75 @@ let model;
   console.log("✅ MobileNet model loaded");
 })();
 
+// Making an user and admin user for demo
+const users = {
+   CAB432: {
+      password: "supersecret",
+      admin: false,
+   },
+   admin: {
+      password: "admin",
+      admin: true,
+   },
+};
+
+
+app.post("/signup", (req, res) => {
+  const { username, password } = req.body;
+
+  if (!username || !password) {
+    return res.status(400).json({ error: "Username and password required" });
+  }
+
+  if (users[username]) {
+    return res.status(409).json({ error: "User already exists" });
+  }
+
+  users[username] = { password, admin: false };
+
+  console.log("✅ User registered:", username);
+  res.status(201).json({ message: "User registered successfully" });
+});
+
+app.post("/login", (req, res) => {
+   const { username, password } = req.body;
+   const user = users[username];
+
+   if (!user || password !== user.password) {
+      return res.status(401).json({ error: "Invalid username or password" });
+   }
+
+   const token = JWT.generateAccessToken({ username });
+
+   // Include the admin flag in the response
+   res.json({ authToken: token, admin: user.admin });
+});
+
+
+
+// Main page protected by our authentication middleware
+app.get("/", JWT.authenticateToken, (req, res) => {
+   res.sendFile(path.join(__dirname, "public", "index.html"));
+});
+
+// Admin page requires admin permissions
+app.get("/admin", JWT.authenticateToken, (req, res) => {
+   // user info added to the request by JWT.authenticateToken
+   // Check user permissions
+   const user = users[req.user.username];
+   
+   if (!user || !user.admin) {
+      // bad user or not admin
+      console.log("Unauthorised user requested admin content.");
+      return res.sendStatus(403);
+   }
+
+   // User permissions verified.
+   res.sendFile(path.join(__dirname, "public", "admin.html"));
+});
+
 //image upload and classification of image
-app.post('/uploads', upload.single('image'), async (req, res) => {
+app.post('/uploads',JWT.authenticateToken, upload.single('image'), async (req, res) => {
   try{
     if (!req.file) return res.status(400).send('No file uploaded!');
 
@@ -73,7 +145,7 @@ app.post('/uploads', upload.single('image'), async (req, res) => {
 
 
 //get the image from id
-app.get("/uploads/:id", async (req, res) => {
+app.get("/uploads/:id",JWT.authenticateToken, async (req, res) => {
   try {
     const rows = await db.all("SELECT * FROM images WHERE id = ?", [
       req.params.id,
@@ -99,7 +171,7 @@ app.get("/uploads/:id", async (req, res) => {
 });
 
 //getting data for all images in database
-app.get('/uploads', async (req, res) => {
+app.get('/uploads',JWT.authenticateToken, async (req, res) => {
   try {
     const rows = await db.all('SELECT id, name, label, confidence FROM images');
     console.log("Query successful, found", rows.length, "images");
@@ -112,5 +184,24 @@ app.get('/uploads', async (req, res) => {
     res.status(500).json({ error: "Error fetching images", details: error.message });
   }
 });
+
+app.deleteItem(JWT.authenticateToken, async (req, res) => {
+    try {
+      if (!currentUser || !currentUser.admin) {
+      console.log("Unauthorized delete attempt by:", user.username);
+      return res.sendStatus(403);
+      }
+
+      const { id } = req.params;
+      await db.run("DELETE FROM images WHERE id = ?", [id]);
+      res.sendStatus(204);
+      
+    } catch (error) {
+      console.error("Error deleting image:", error);
+      res.status(500).json({ error: "Error deleting image" });
+    }
+  }
+)
+
 
 module.exports = app

@@ -4,15 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel = "stylesheet" href="css/database.css">
+    <link rel = "stylesheet" href="css/navbar.css">
     <title>Uploads</title>
 </head>
+
 <body>
+  <nav id="navbar">
+    <div id="userStatus"></div>
+    <div id="navButtons">
+      <button id="toHome">Home</button>
+      <button id="toDatabase">Database</button>
+      <button id="toLogin">Login</button>
+      <button id="logoutBtn">Logout</button>
+    </div>
+  </nav>
+
   <h1>Uploaded Images</h1>
   <div class="gallery" id="gallery"></div>
-  <nav>
-      <button id="toLogin">Login</button>
-      <button id="toHome">Home</button>
-  </nav>
 
 <script src="js/database.js"></script>
 </body>

@@ -1,20 +1,30 @@
-const form = document.getElementById('signUpForm');
+const form = document.getElementById("signUpForm");
 
-form.addEventListener('submit', async (e) => {
-    e.preventDefault();
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const formData = new FormData(form);
 
-    const formData = new FormData(form);
-    const res = await fetch('/signup', {
-        method: 'POST',
-        body: formData
+  const user = {
+    username: formData.get("username"),
+    password: formData.get("password"),
+  };
+
+  try {
+    const res = await fetch("/signup", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(user),
     });
 
-    if (res.ok) {
-        window.location.href = '/index.html';
-    } else {
-        const error = await res.text();
-        alert(error);
-    }
+    const data = await res.json();
+
+    if (!res.ok) throw new Error(data.error || "Signup failed");
+
+    alert("✅ " + data.message);
+    window.location.href = "/login.html"; // redirect after success
+  } catch (err) {
+    alert("❌ " + err.message);
+  }
 });
 
 document.getElementById("toDatabase").addEventListener("click", () => {
@@ -28,3 +38,4 @@ document.getElementById("toHome").addEventListener("click", () => {
 document.getElementById("toLogin").addEventListener("click", () => {
     window.location.href = '/login.html';
 });
+
