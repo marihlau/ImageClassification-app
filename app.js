@@ -14,7 +14,7 @@ const { init, getDB } = require('./persistence/sqlite');
 const app = express()
 
 // Using the public folder
-app.use(express.static(path.join(__dirname, 'public/html')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 //database routing
 app.get('/images', getItems);
@@ -23,10 +23,10 @@ app.delete('/images/:id', deleteItem);
 
 const upload = multer({
   storage: multer.memoryStorage(),
-  limits: { fileSize: 2 * 1024 * 1024 } // 2 MB max
+  limits: { fileSize: 2 * 1024 * 1024 } //max file size 2MB
 });
 
-let db;
+let db; //initialising database
 (async () => {
   await init();
   db = getDB();
