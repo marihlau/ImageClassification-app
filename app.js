@@ -14,7 +14,7 @@ const { init, getDB } = require('./persistence/sqlite');
 const app = express()
 
 // Using the public folder
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public/html')));
 
 //database routing
 app.get('/images', getItems);
