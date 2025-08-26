@@ -10,9 +10,9 @@ const tokenSecret = process.env.JWT_SECRET || "supersecretkey";
 // Create a token with username embedded, setting the validity period.
 const generateAccessToken = (user) => {
    return jwt.sign(
-      { username: user.username }, 
+      { username: user.username , isAdmin: user.isAdmin }, 
       tokenSecret, 
-      { expiresIn: "30m" });
+      { expiresIn: "1h" });
 };
 
 // Middleware to verify a token and respond with user information

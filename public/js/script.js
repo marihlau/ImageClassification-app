@@ -5,13 +5,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const message = document.getElementById('message');
   const token = localStorage.getItem("authToken"); // get the JWT from login
   const userStatus = document.getElementById("userStatus");
+  const admin = JSON.parse(localStorage.getItem("isAdmin")); 
+  
   if (!token) {
     userStatus.innerText = "Not logged in";
     userStatus.style.color = "red";
-} else {
-    userStatus.innerText = "Logged in";
+  } else if (admin) {
+    userStatus.innerText = "Logged in as admin";
+    userStatus.style.color = "blue";
+  } else {
+    userStatus.innerText = "Logged in as user";
     userStatus.style.color = "green";
-}
+    }
 
 form.addEventListener('submit', async (e) => {
     e.preventDefault();

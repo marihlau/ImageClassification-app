@@ -16,23 +16,19 @@ form.addEventListener("submit", async (e) => {
       body: JSON.stringify(user),
     });
 
-    const data = await res.json();
-    localStorage.setItem("authToken", data.authToken);
-
-    if (data.admin) {
-        window.location.href = "/admin.html";
-    } else {
-        window.location.href = "/index.html";
+    if (!res.ok) {
+      const err = await res.json();
+      alert("Login failed: " + err.error);
+      return;
     }
-
-    if (!res.ok) throw new Error(data.error || "Login failed");
-
-    // Store JWT token
+    const data = await res.json();
+    console.log("Login successful:", data);
     localStorage.setItem("authToken", data.authToken);
-
+    localStorage.setItem("isAdmin", JSON.stringify(data.admin));
+    
     alert("✅ Login successful!");
     if (data.admin) {
-        window.location.href = "/admin.html";
+      window.location.href = "/admin.html";
     } else {
         window.location.href = "/index.html";
     }
