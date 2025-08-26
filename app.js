@@ -3,7 +3,6 @@ const express = require('express')
 const multer = require('multer')
 const tf = require('@tensorflow/tfjs');
 const mobilenet = require('@tensorflow-models/mobilenet');
-//const mysql = require('mysql2/promise');
 const path = require('path');
 const getItems = require('./routes/getItems');
 const addItem = require('./routes/addItem');
@@ -21,6 +20,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/images', getItems);
 app.post('/images', addItem);
 app.delete('/images/:id', deleteItem);
+
 const upload = multer({
   storage: multer.memoryStorage(),
   limits: { fileSize: 2 * 1024 * 1024 } // 2 MB max
@@ -31,42 +31,6 @@ let db;
   await init();
   db = getDB();
 })();
-
-//mysql
-// const pool = mysql.createPool({
-//   host: 'localhost',
-//   user: 'root',
-//   password: 'databasepassword',
-//   database: 'test'
-// });
-
-//Test database connection
-// db.getConnection()
-//   .then(connection => {
-//     console.log('✅ database connected successfully');
-//     connection.release();
-//   })
-//   .catch(err => {
-//     console.error('MySQL connection failed:', err.message);
-//   });
-
-// Insert example
-// await db.run(
-//   'INSERT INTO images (name, image, label, confidence, contentType) VALUES (?, ?, ?, ?, ?)',
-//   [req.file.originalname, req.file.buffer, best.className, best.probability, req.file.mimetype]
-// );
-
-// Select example
-//const rows = await db.all('SELECT id, name, label, confidence FROM images');
-
-
-//uploading the images to memory storage
-// Using Multer for file uploads
-// const storage = multer.diskStorage({
-//   destination: (req, file, cb) => cb(null, 'uploads/'),
-//   filename: (req, file, cb) => cb(null, Date.now() + '-' + file.originalname)
-// });
-
 
 //loading the tensorflow MobileNet model
 let model;

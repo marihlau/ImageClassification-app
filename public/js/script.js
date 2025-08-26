@@ -33,8 +33,10 @@ form.addEventListener('submit', async(e)=>{
 
 }); 
 
-document.getElementById("todatabase").addEventListener("click", () => {
-    window.location.href = '/uploads.html';
+document.getElementById("toDatabase").addEventListener("click", () => {
+    window.location.href = '/database.html';
 });
 
-
+document.getElementById("toLogin").addEventListener("click", () => {
+    window.location.href = '/login.html';
+});
