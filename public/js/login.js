@@ -1,7 +1,7 @@
 const form = document.getElementById("loginForm");
 
 form.addEventListener("submit", async (e) => {
-  e.preventDefault(); // stop normal form submission
+  e.preventDefault(); 
   const formData = new FormData(form);
 
   const user = {
@@ -28,11 +28,6 @@ form.addEventListener("submit", async (e) => {
     
     alert("✅ Login successful!");
     window.location.href = "/index.html";
-    // if (data.admin) {
-    //   window.location.href = "/admin.html";
-    // } else {
-    //     window.location.href = "/index.html";
-    // }
 
   } catch (err) {
     alert("❌ " + err.message);
@@ -52,5 +47,6 @@ document.getElementById("toHome").addEventListener("click", () => {
 
 document.getElementById("logoutBtn").addEventListener("click", () => {
   localStorage.removeItem("authToken");
+  localStorage.removeItem("isAdmin");
   window.location.href = "/login.html";
 });

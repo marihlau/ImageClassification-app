@@ -17,11 +17,14 @@ form.addEventListener("submit", async (e) => {
     });
 
     const data = await res.json();
+    console.log("Signup successful:", data);
+    localStorage.setItem("authToken", data.authToken);
+    localStorage.setItem("isAdmin", JSON.stringify(data.admin));
 
     if (!res.ok) throw new Error(data.error || "Signup failed");
 
     alert("✅ " + data.message);
-    window.location.href = "/login.html"; // redirect after success
+    window.location.href = "/index.html"; //go to home page after sign up
   } catch (err) {
     alert("❌ " + err.message);
   }
