@@ -29,7 +29,7 @@ app.delete('/images/:id', deleteItem);
 
 const upload = multer({
   storage: multer.memoryStorage(),
-  //limits: { fileSize: 2 * 1024 * 1024 } //max file size 2MB
+  limits: { fileSize: 2 * 1450 * 1450 } //max file size 2MB
 });
 
 let db; //initialising database
