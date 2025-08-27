@@ -5,6 +5,7 @@ const admin = JSON.parse(localStorage.getItem("isAdmin"));
 const logoutBtn = document.getElementById("logoutBtn");
 const loginBtn = document.getElementById("toLogin");
 
+//defining different functionality if admin/user/not logged in
 if (!token) {
   if (logoutBtn) logoutBtn.style.display = "none"; 
   if (loginBtn) loginBtn.style.display = "inline-block"; 

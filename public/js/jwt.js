@@ -1,13 +1,8 @@
 const jwt = require("jsonwebtoken");
 
-// Using a fixed authentication secret for demonstration purposes.
-// Ideally this would be stored in a secrets manager and retrieved here.
-// To create a new randomly chosen secret instead, you can use:
-//
 const tokenSecret = process.env.JWT_SECRET || "supersecretkey";
-//
 
-// Create a token with username embedded, setting the validity period.
+// Create a token with username, setting validity period
 const generateAccessToken = (user) => {
    return jwt.sign(
       { username: user.username , isAdmin: user.isAdmin }, 
@@ -15,9 +10,8 @@ const generateAccessToken = (user) => {
       { expiresIn: "1h" });
 };
 
-// Middleware to verify a token and respond with user information
+// Verify a token and respond with user information
 const authenticateToken = (req, res, next) => {
-   // We are using Bearer auth.  The token is in the authorization header.
    const authHeader = req.headers["authorization"];
    const token = authHeader && authHeader.split(' ')[1];
 

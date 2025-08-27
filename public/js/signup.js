@@ -18,18 +18,19 @@ form.addEventListener("submit", async (e) => {
 
     const data = await res.json();
     console.log("Signup successful:", data);
-    localStorage.setItem("authToken", data.authToken);
-    localStorage.setItem("isAdmin", JSON.stringify(data.admin));
+    localStorage.setItem("authToken", data.authToken); //storing auth token
+    localStorage.setItem("isAdmin", JSON.stringify(data.admin)); //storing if user is admin
 
     if (!res.ok) throw new Error(data.error || "Signup failed");
 
     alert("✅ " + data.message);
-    window.location.href = "/index.html"; //go to home page after sign up
-  } catch (err) {
+    window.location.href = "/index.html"; //going to home page after signup
+  } catch (err) { 
     alert("❌ " + err.message);
   }
 });
 
+//navbar buttons functionality
 document.getElementById("toDatabase").addEventListener("click", () => {
     window.location.href = '/database.html';
 });

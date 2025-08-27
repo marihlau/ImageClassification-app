@@ -15,24 +15,22 @@ const fs = require('fs');
 //setting up the app using express
 const app = express()
 
-
-// Using the public folder
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
-
 app.use(express.urlencoded({ extended: true }));
 
-//database routing
+//routing to database
 app.get('/images', getItems);
 app.post('/images', addItem);
 app.delete('/images/:id', deleteItem);
 
 const upload = multer({
   storage: multer.memoryStorage(),
-  limits: { fileSize: 2 * 1450 * 1450 } //max file size 2MB
+  limits: { fileSize: 2 * 1450 * 1450 } //max file size so not to overload
 });
 
-let db; //initialising database
+//initialising database
+let db; 
 (async () => {
   await init();
   db = getDB();
@@ -57,7 +55,7 @@ const users = {
    },
 };
 
-
+//signup 
 app.post("/signup", (req, res) => {
   const { username, password } = req.body;
 
@@ -75,6 +73,7 @@ app.post("/signup", (req, res) => {
   res.status(201).json({ message: "User registered successfully" });
 });
 
+//login 
 app.post("/login", (req, res) => {
    const { username, password } = req.body;
    const user = users[username];
@@ -86,24 +85,22 @@ app.post("/login", (req, res) => {
    res.json({ authToken: token, admin: user.admin });
 });
 
-
-
-// Main page protected by our authentication middleware
+// authentication
 app.get("/", JWT.authenticateToken, (req, res) => {
    res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-// Admin page requires admin permissions
-app.get("/admin", JWT.authenticateToken, (req, res) => {
-   const user = users[req.user.username];
+// // Admin page requires admin permissions
+// app.get("/admin", JWT.authenticateToken, (req, res) => {
+//    const user = users[req.user.username];
    
-   if (!user || !user.admin) {
-      console.log("Unauthorised user requested admin content.");
-      return res.sendStatus(403);
-   }
+//    if (!user || !user.admin) {
+//       console.log("Unauthorised user requested admin content.");
+//       return res.sendStatus(403);
+//    }
 
-   res.sendFile(path.join(__dirname, "public", "admin.html"));
-});
+//    res.sendFile(path.join(__dirname, "public", "admin.html"));
+// });
 
 //image upload and classification of image
 app.post('/uploads',JWT.authenticateToken, upload.single('image'), async (req, res) => {
@@ -115,7 +112,7 @@ app.post('/uploads',JWT.authenticateToken, upload.single('image'), async (req, r
     const predictions = await model.classify(tensor);
     const best = predictions[0];
 
-    //store in database
+    //store image in database
     const sql = `INSERT INTO images (name, image, label, confidence, contentType) VALUES (?, ?, ?, ?, ?)`;
     const values = [
       req.file.originalname, 
@@ -138,7 +135,7 @@ app.post('/uploads',JWT.authenticateToken, upload.single('image'), async (req, r
 });
 
 
-//get the image from id
+//get the individual image from id
 app.get("/uploads/:id",JWT.authenticateToken, async (req, res) => {
   try {
     const rows = await db.all("SELECT * FROM images WHERE id = ?", [
@@ -178,7 +175,7 @@ app.get('/uploads',JWT.authenticateToken, async (req, res) => {
   }
 });
 
-//deleting from database
+//deleting image from database
 app.delete('/uploads/:id', JWT.authenticateToken, async (req, res) => {
   try{
     const user = users[req.user.username]; 

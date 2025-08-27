@@ -7,18 +7,19 @@ document.addEventListener("DOMContentLoaded", () => {
   const logoutBtn = document.getElementById("logoutBtn");
   const loginBtn = document.getElementById("toLogin");
 
+//defining different functionality if admin/user/not logged in
     if (!token) {
-        if (logoutBtn) logoutBtn.style.display = "none";  // hide logout
-        if (loginBtn) loginBtn.style.display = "inline-block"; // show login
+        if (logoutBtn) logoutBtn.style.display = "none";  
+        if (loginBtn) loginBtn.style.display = "inline-block"; 
         userStatus.innerText = "Not logged in";
         userStatus.style.color = "#2f4156";
     } else if (admin) {
-        if (logoutBtn) logoutBtn.style.display = "inline-block"; // show logout
+        if (logoutBtn) logoutBtn.style.display = "inline-block";
         if (loginBtn) loginBtn.style.display = "none";
         userStatus.innerText = "Logged in as admin";
         userStatus.style.color = "#2f4156";
     } else {
-        if (logoutBtn) logoutBtn.style.display = "inline-block"; // show logout
+        if (logoutBtn) logoutBtn.style.display = "inline-block"; 
         if (loginBtn) loginBtn.style.display = "none";
         userStatus.innerText = "Logged in as user";
         userStatus.style.color = "#2f4156";
@@ -48,6 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const messageEl = document.getElementById("message");
             const JSONdata = await res.json();
 
+            //classification result
             if (messageEl) {
                 if (JSONdata.classification) {
                 messageEl.textContent = `${JSONdata.message}: ${JSONdata.classification.className} (${(JSONdata.classification.probability * 100).toFixed(2)}%)`;
@@ -65,6 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }); 
 
+    //navbar functionality
     document.getElementById("toDatabase").addEventListener("click", () => {
         if (!token) {
             alert("You must be logged in to access the database.");
