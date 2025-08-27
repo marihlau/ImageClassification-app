@@ -14,40 +14,40 @@ document.addEventListener("DOMContentLoaded", () => {
         headers: { 'Authorization': `Bearer ${token}` }
       });
 
-      // if (res.status === 401 || res.status === 403) {
-      //   alert("Session expired, please login again.");
-      //   localStorage.removeItem("authToken");
-      //   window.location.href = "/login.html";
-      //   return;
-      // }
+      if (res.status === 401 || res.status === 403) {
+        alert("Session expired, please login again.");
+        localStorage.removeItem("authToken");
+        window.location.href = "/login.html";
+        return;
+      }
 
       if (!res.ok) throw new Error('Failed to fetch images: ' + res.statusText);
 
       const images = await res.json();
-gallery.innerHTML = '';
+      gallery.innerHTML = '';
 
-for (const img of images) {
-  const card = document.createElement('div');
-  card.className = 'card';
+      for (const img of images) {
+        const card = document.createElement('div');
+        card.className = 'card';
 
-  // Fetch image with token
-  const response = await fetch(`/uploads/${img.id}`, {
-    headers: { 'Authorization': `Bearer ${token}` }
-  });
-  const blob = await response.blob();
-  const imgURL = URL.createObjectURL(blob);
+        // Fetch image with token
+        const response = await fetch(`/uploads/${img.id}`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const blob = await response.blob();
+        const imgURL = URL.createObjectURL(blob);
 
-  // Only show delete button if admin
-  card.innerHTML = `
-    <img src="${imgURL}" >
-    <h3>${img.name}</h3>
-    <p>Label: ${img.label}</p>
-    <p>Probability: ${(img.confidence * 100).toFixed(2)}%</p>
-    ${isAdmin ? `<button class="delete-btn" data-id="${img.id}">Delete</button>` : ''}
-  `;
+        // Only show delete button if admin
+        card.innerHTML = `
+          <img src="${imgURL}" >
+          <h3>${img.name}</h3>
+          <p>Label: ${img.label}</p>
+          <p>Probability: ${(img.confidence * 100).toFixed(2)}%</p>
+          ${isAdmin ? `<button class="delete-btn" data-id="${img.id}">Delete</button>` : ''}
+        `;
 
-  gallery.appendChild(card);
-}
+        gallery.appendChild(card);
+      }
 
       // const images = await res.json();
       // gallery.innerHTML = '';
@@ -55,7 +55,7 @@ for (const img of images) {
       // images.forEach(img => {
       //   const card = document.createElement('div');
       //   card.className = 'card';
-      //   const imgURL = `http://localhost:3000/uploads/${img.id}?t=${Date.now()}`;
+      //   const imgURL = `uploads/${img.id}?t=${Date.now()}`;
 
       //   // Only show delete button if admin
       //   card.innerHTML = `
@@ -72,7 +72,8 @@ for (const img of images) {
       console.error(err);
       gallery.innerText = 'Failed to load images.';
     }
-  }
+  }//end of loadImages
+
   console.log("Is admin:", isAdmin);
   // Add click handler for delete buttons if admin
   if (isAdmin) {
@@ -84,7 +85,7 @@ for (const img of images) {
       if (!confirm("Are you sure you want to delete this image?")) return;
         try{
             console.log("Auth token:", token, "deleting image with id:", id);
-            const url = `/images/${id}`;
+            const url = `/uploads/${id}`;
             console.log("Fetching URL:", url);
             const res = await fetch(url, {
               method: "DELETE",

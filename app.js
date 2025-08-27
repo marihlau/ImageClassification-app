@@ -186,7 +186,7 @@ app.get('/uploads',JWT.authenticateToken, async (req, res) => {
   }
 });
 
-app.delete('/images/:id', JWT.authenticateToken, async (req, res) => {
+app.delete('/uploads/:id', JWT.authenticateToken, async (req, res) => {
   try{
     //const{id}=req.params;
     const user = users[req.user.username]; // Get the logged-in user
