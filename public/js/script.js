@@ -6,7 +6,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const admin = JSON.parse(localStorage.getItem("isAdmin")); 
   const logoutBtn = document.getElementById("logoutBtn");
   const loginBtn = document.getElementById("toLogin");
-  console.log("Script.js loaded, token:", token, "isAdmin:", admin);
   
     if (!token) {
         if (logoutBtn) logoutBtn.style.display = "none";  // hide logout
@@ -67,7 +66,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }); 
 
     document.getElementById("toDatabase").addEventListener("click", () => {
-        window.location.href = '/database.html';
+        if (!token) {
+            alert("You must be logged in to access the database.");
+        } else {
+            window.location.href = '/database.html';
+        }
     });
 
     document.getElementById("toLogin").addEventListener("click", () => {

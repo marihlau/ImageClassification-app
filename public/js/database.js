@@ -2,7 +2,28 @@ document.addEventListener("DOMContentLoaded", () => {
   const token = localStorage.getItem("authToken");
   const isAdmin = JSON.parse(localStorage.getItem("isAdmin")); // boolean
   const gallery = document.getElementById('gallery');
+  const logoutBtn = document.getElementById("logoutBtn");
+  const loginBtn = document.getElementById("toLogin");
+  const userStatus = document.getElementById("userStatus");
+  const admin = JSON.parse(localStorage.getItem("isAdmin")); 
 
+  if (!token) {
+        if (logoutBtn) logoutBtn.style.display = "none";  // hide logout
+        if (loginBtn) loginBtn.style.display = "inline-block"; // show login
+        userStatus.innerText = "Not logged in";
+        userStatus.style.color = "red";
+    } else if (admin) {
+        if (logoutBtn) logoutBtn.style.display = "inline-block"; // show logout
+        if (loginBtn) loginBtn.style.display = "none";
+        userStatus.innerText = "Logged in as admin";
+        userStatus.style.color = "blue";
+    } else {
+        if (logoutBtn) logoutBtn.style.display = "inline-block"; // show logout
+        if (loginBtn) loginBtn.style.display = "none";
+        userStatus.innerText = "Logged in as user";
+        userStatus.style.color = "green";
+        }
+    
   async function loadImages() {
     if (!token) {
       window.location.href = '/login.html';
@@ -105,7 +126,11 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("logoutBtn").addEventListener("click", () => {
     localStorage.removeItem("authToken");
     localStorage.removeItem("isAdmin");
-    window.location.href = '/login.html';
+    userStatus.innerText = "Not logged in";
+    userStatus.style.color = "red";
+    logoutBtn.style.display = "none";
+    loginBtn.style.display = "inline-block";
+    window.location.href = '/index.html';
   });
 
 });

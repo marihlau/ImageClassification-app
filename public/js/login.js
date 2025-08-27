@@ -1,4 +1,26 @@
 const form = document.getElementById("loginForm");
+const token = localStorage.getItem("authToken"); 
+const userStatus = document.getElementById("userStatus");
+const admin = JSON.parse(localStorage.getItem("isAdmin")); 
+const logoutBtn = document.getElementById("logoutBtn");
+const loginBtn = document.getElementById("toLogin");
+
+if (!token) {
+  if (logoutBtn) logoutBtn.style.display = "none"; 
+  if (loginBtn) loginBtn.style.display = "inline-block"; 
+  userStatus.innerText = "Not logged in";
+  userStatus.style.color = "red";
+} else if (admin) {
+  if (logoutBtn) logoutBtn.style.display = "inline-block"; 
+  if (loginBtn) loginBtn.style.display = "none";
+  userStatus.innerText = "Logged in as admin";
+  userStatus.style.color = "blue";
+} else {
+  if (logoutBtn) logoutBtn.style.display = "inline-block"; 
+  if (loginBtn) loginBtn.style.display = "none";
+  userStatus.innerText = "Logged in as user";
+  userStatus.style.color = "green";
+}
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault(); 
@@ -48,5 +70,8 @@ document.getElementById("toHome").addEventListener("click", () => {
 document.getElementById("logoutBtn").addEventListener("click", () => {
   localStorage.removeItem("authToken");
   localStorage.removeItem("isAdmin");
-  window.location.href = "/login.html";
+  userStatus.innerText = "Not logged in";
+  userStatus.style.color = "red";
+  logoutBtn.style.display = "none";
+  loginBtn.style.display = "inline-block";
 });
