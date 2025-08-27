@@ -27,11 +27,12 @@ form.addEventListener("submit", async (e) => {
     localStorage.setItem("isAdmin", JSON.stringify(data.admin));
     
     alert("✅ Login successful!");
-    if (data.admin) {
-      window.location.href = "/admin.html";
-    } else {
-        window.location.href = "/index.html";
-    }
+    window.location.href = "/index.html";
+    // if (data.admin) {
+    //   window.location.href = "/admin.html";
+    // } else {
+    //     window.location.href = "/index.html";
+    // }
 
   } catch (err) {
     alert("❌ " + err.message);
