@@ -11,12 +11,12 @@ document.addEventListener("DOMContentLoaded", () => {
         if (logoutBtn) logoutBtn.style.display = "none";  // hide logout
         if (loginBtn) loginBtn.style.display = "inline-block"; // show login
         userStatus.innerText = "Not logged in";
-        userStatus.style.color = "red";
+        userStatus.style.color = "#2f4156";
     } else if (admin) {
         if (logoutBtn) logoutBtn.style.display = "inline-block"; // show logout
         if (loginBtn) loginBtn.style.display = "none";
         userStatus.innerText = "Logged in as admin";
-        userStatus.style.color = "blue";
+        userStatus.style.color = "#2f4156";
     } else {
         if (logoutBtn) logoutBtn.style.display = "inline-block"; // show logout
         if (loginBtn) loginBtn.style.display = "none";

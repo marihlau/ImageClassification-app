@@ -6,22 +6,22 @@ document.addEventListener("DOMContentLoaded", () => {
   const admin = JSON.parse(localStorage.getItem("isAdmin")); 
   const logoutBtn = document.getElementById("logoutBtn");
   const loginBtn = document.getElementById("toLogin");
-  
+
     if (!token) {
         if (logoutBtn) logoutBtn.style.display = "none";  // hide logout
         if (loginBtn) loginBtn.style.display = "inline-block"; // show login
         userStatus.innerText = "Not logged in";
-        userStatus.style.color = "red";
+        userStatus.style.color = "#2f4156";
     } else if (admin) {
         if (logoutBtn) logoutBtn.style.display = "inline-block"; // show logout
         if (loginBtn) loginBtn.style.display = "none";
         userStatus.innerText = "Logged in as admin";
-        userStatus.style.color = "blue";
+        userStatus.style.color = "#2f4156";
     } else {
         if (logoutBtn) logoutBtn.style.display = "inline-block"; // show logout
         if (loginBtn) loginBtn.style.display = "none";
         userStatus.innerText = "Logged in as user";
-        userStatus.style.color = "green";
+        userStatus.style.color = "#2f4156";
         }
 
     form.addEventListener('submit', async (e) => {

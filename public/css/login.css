@@ -3,7 +3,7 @@ html, body {
   padding: 0;
   height: 100%;
   font-family: Arial, sans-serif;
-  background: #eef2ff;
+  background: #2f4156;
 }
 
 body {
@@ -11,24 +11,10 @@ body {
   flex-direction: column;
 }
 
-/* .pagewrap {
-  display: flex;
-  flex-direction: column; 
-  align-items: center;
-  min-height: 100vh;
-  background: #eef2ff;
-  padding: 20px 0;
-}
-.container-wrapper {
-  flex: 1;               
-  display: flex;              
-  justify-content: center; 
-  align-items: center;       
-} */
 
 .container {
   margin: auto;
-  background: #fff;
+  background: #c8d9e6;
   padding: 2rem;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
@@ -38,6 +24,7 @@ body {
 
 .container h1 {
   margin-bottom: 1rem;
+  color: #2f4156;
 }
 
 .container form {
@@ -54,12 +41,12 @@ body {
 }
 
 .container button[type="submit"] {
-  background: #007bff;
+  background: #2f4156;
   color: #fff;
 }
 
 .container .secondary {
-  background: #6c757d;
+  background: #2f4156;
   color: #fff;
   margin: 1rem;
 }
@@ -72,7 +59,7 @@ body {
 }
 
 .bottom-buttons button {
-  background: #007bff;
+  background: #2f4156;
   color: white;
   padding: 0.6rem 1.2rem;
   border: none;

@@ -9,17 +9,17 @@ if (!token) {
   if (logoutBtn) logoutBtn.style.display = "none"; 
   if (loginBtn) loginBtn.style.display = "inline-block"; 
   userStatus.innerText = "Not logged in";
-  userStatus.style.color = "red";
+  userStatus.style.color = "#2f4156";
 } else if (admin) {
   if (logoutBtn) logoutBtn.style.display = "inline-block"; 
   if (loginBtn) loginBtn.style.display = "none";
   userStatus.innerText = "Logged in as admin";
-  userStatus.style.color = "blue";
+  userStatus.style.color = "#2f4156";
 } else {
   if (logoutBtn) logoutBtn.style.display = "inline-block"; 
   if (loginBtn) loginBtn.style.display = "none";
   userStatus.innerText = "Logged in as user";
-  userStatus.style.color = "green";
+  userStatus.style.color = "#2f4156";
 }
 
 form.addEventListener("submit", async (e) => {

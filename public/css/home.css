@@ -1,6 +1,6 @@
 /* For the upload drop area, I took inspiration from a youtube video, https://www.youtube.com/watch?v=3M_yaWEqM5E */
 body{
-    background: #e4eafa;
+    background: #2f4156;
 }
 
 h1{
@@ -8,7 +8,7 @@ h1{
     text-align: center;
     font-family: Arial, sans-serif; 
     font-size: 2rem;                   
-    color: #333;                                  
+    color: #f5efeb;                                  
     max-width: 600px;                     
     margin: 2rem auto 1rem auto; 
 }
@@ -16,11 +16,11 @@ h1{
 button{
     width: 350px;
     max-width: 100%;
-    color: #444;
+    color: #2f4156;
     font-size: 1rem;
     font-family: Arial,sans-serif;
     padding: 2px;
-    background: #fff;
+    background: #f5efeb;
     border-radius: 4px;
     border: 1px solid rgba(8, 8, 8, 0.288);
 }
@@ -31,11 +31,11 @@ p{
     text-align: center; 
     font-family: Arial,sans-serif;
     font-size: 1rem;
-    color: #333;
+    color: #f5efeb;
 }
 
 .form{
-    background-color: #1c212e;
+    background-color: #c8d9e6;
     border: 1px solid rgb(159, 159, 159);
     border-radius: 7px;
     padding: 2rem .7rem .7rem .7rem;
@@ -50,12 +50,12 @@ p{
 }
 
 .form-icon{
-    color: #fff;
+    color: #2f4156;
     font-size: 4rem;
 }
 
 .drop-container{
-    background-color: #3c3e4f;
+    background-color: #f5efeb;
     position: relative;
     display: flex;
     gap: 10px;
@@ -66,18 +66,18 @@ p{
     margin-top: 1rem;
     margin-bottom: 0.4rem;
     border-radius: 4px;
-    border: 2px dashed #fff;
-    color: #fff;
+    border: 2px dashed #c8d9e6;
+    color: #2f4156;
     cursor: pointer;
     transition: background .2s ease-in-out, border .2s ease-in-out;
 }
 
 .drop-container:hover{
-    background: #646784;
+    background: #fff;
 }
 
 .drop-title{
-    color: #fff;
+    color: #2f4156;
     font-size: 20px;
     text-align: center;
     transition: color .2s ease-in-out;
@@ -88,31 +88,32 @@ p{
     max-width: 100%;
     color: #444;
     padding: 2px;
-    background: #fff;
+    background: #2f4156;
     border-radius: 4px;
-    border: 1px solid rgba(8, 8, 8, 0.288);
+    border: 1px solid 2f4156;
 }
 
 #message{
     text-align: center; 
     font-family: sans-serif;
     font-size: 1rem;
-    color: #fff;
+    color: #2f4156;
     padding: 1pc;
 }
 
 #file-input::file-selector-button{
     margin-right: 20px;
     border: none;
-    background: #084cdf;
+    background: #f5efeb;
     padding: 10px 20px;
     border-radius: 4px;
-    color: #fff;
+    color: #2f4156;
     cursor: pointer;
     transition: background .2s ease-in-out;
 }
 
 #file-input::file-selector-button:hover{
-    background: #0d45a5;
+    background: #2f4156;
+    color: #f5efeb;
 
 }

@@ -8,16 +8,17 @@ button {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #bbcaf8;
+  background-color: #c8d9e6;
   color: black;
   padding: 10px 20px;
+  border-radius: 0 0 6px 6px;
 }
 
 #navbar button {
   margin-left: 10px;
   padding: 5px 10px;
   border: 1px solid white;
-  background-color: #bbcaf8;
+  background-color: #567c8d;
   color: black;
   cursor: pointer;
   border-radius: 4px;
@@ -31,7 +32,7 @@ button {
 }
 
 #navbar button:hover {
-  background-color: #dfe6fb;
+  background-color: #c8d9e6;
 }
 
 #userStatus {
