@@ -29,7 +29,7 @@ app.delete('/images/:id', deleteItem);
 
 const upload = multer({
   storage: multer.memoryStorage(),
-  limits: { fileSize: 2 * 1024 * 1024 } //max file size 2MB
+  //limits: { fileSize: 2 * 1024 * 1024 } //max file size 2MB
 });
 
 let db; //initialising database
@@ -82,10 +82,7 @@ app.post("/login", (req, res) => {
    if (!user || password !== user.password) {
       return res.status(401).json({ error: "Invalid username or password" });
    }
-
    const token = JWT.generateAccessToken({ username });
-
-   // Include the admin flag in the response
    res.json({ authToken: token, admin: user.admin });
 });
 
@@ -98,17 +95,13 @@ app.get("/", JWT.authenticateToken, (req, res) => {
 
 // Admin page requires admin permissions
 app.get("/admin", JWT.authenticateToken, (req, res) => {
-   // user info added to the request by JWT.authenticateToken
-   // Check user permissions
    const user = users[req.user.username];
    
    if (!user || !user.admin) {
-      // bad user or not admin
       console.log("Unauthorised user requested admin content.");
       return res.sendStatus(403);
    }
 
-   // User permissions verified.
    res.sendFile(path.join(__dirname, "public", "admin.html"));
 });
 
@@ -176,8 +169,7 @@ app.get('/uploads',JWT.authenticateToken, async (req, res) => {
   try {
     const rows = await db.all('SELECT id, name, label, confidence FROM images');
     console.log("Query successful, found", rows.length, "images");
-    
-    //if (rows.length === 0) return res.status(404).json({ message: "No images found." });
+  
     res.json(rows);
   } catch (error) {
     console.error("Error fetching images:", error.message);
@@ -186,11 +178,10 @@ app.get('/uploads',JWT.authenticateToken, async (req, res) => {
   }
 });
 
+//deleting from database
 app.delete('/uploads/:id', JWT.authenticateToken, async (req, res) => {
   try{
-    //const{id}=req.params;
-    const user = users[req.user.username]; // Get the logged-in user
-    //const user = req.user.username? users[req.user.username]: null;
+    const user = users[req.user.username]; 
     if(!user || !user.admin){
       return res.status(403).json({error: "Forbidden: Admins only"});
     }
@@ -208,55 +199,5 @@ app.delete('/uploads/:id', JWT.authenticateToken, async (req, res) => {
     res.status(500).json({ error: "Error deleting image" });
   }
 });
-// const user = users[req.user.username]; // Get the logged-in user
-// const {id}=req.params;
-// const stmt = db.prepare("SELECT * FROM images WHERE id = ?");
-// const result = stmt.run(id);
-// if(result.changes === 0) {
-//   return res.status(404).json({ error: "Image not found" });
-// }
-// const filePath = path.join(__dirname, 'uploads', `${id}`);
-// if(fs.existsSync(filePath)) {
-//   fs.unlinkSync(filePath);
-// }
-// res.json({ message: "Image deleted successfully" });
-// if (!user || !user.admin) {
-  //   console.log("Unauthorized delete attempt by:", req.user.username);
-//   return res.status(403).json({ error: "Forbidden: Admins only" });
-// }
-
-// try {
-//   const result = await db.run("DELETE FROM images WHERE id = ?", [req.params.id]);
-//   console.log("Deleted rows:", result.changes);
-
-//   if (result.changes === 0) {
-//     return res.status(404).json({ error: "Image not found" });
-//   }
-
-//   res.json({ message: "Image deleted successfully" });
-// } catch (error) {
-//   console.error("Error deleting image:", error);
-//   res.status(500).json({ error: "Error deleting image" });
-// }
-
-
-// // Admin-only image list
-// app.get("/admin/images", JWT.authenticateToken, async (req, res) => {
-//   const user = users[req.user.username];
-
-//   if (!user || !user.admin) {
-//     return res.status(403).json({ error: "Forbidden" });
-//   }
-
-//   try {
-//     const rows = await db.all('SELECT id, name, label, confidence FROM images');
-//     res.json(rows);
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json({ error: "Failed to fetch images" });
-//   }
-// });
-
-
 
 module.exports = app

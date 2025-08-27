@@ -1,9 +1,7 @@
-//const { use } = require("react");
-
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById('imageUpload');
   const message = document.getElementById('message');
-  const token = localStorage.getItem("authToken"); // get the JWT from login
+  const token = localStorage.getItem("authToken"); 
   const userStatus = document.getElementById("userStatus");
   const admin = JSON.parse(localStorage.getItem("isAdmin")); 
   

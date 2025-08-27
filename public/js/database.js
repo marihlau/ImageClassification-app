@@ -48,34 +48,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
         gallery.appendChild(card);
       }
-
-      // const images = await res.json();
-      // gallery.innerHTML = '';
-
-      // images.forEach(img => {
-      //   const card = document.createElement('div');
-      //   card.className = 'card';
-      //   const imgURL = `uploads/${img.id}?t=${Date.now()}`;
-
-      //   // Only show delete button if admin
-      //   card.innerHTML = `
-      //     <img src="${imgURL}" alt="${img.name}">
-      //     <h3>${img.name}</h3>
-      //     <p>Label: ${img.label}</p>
-      //     <p>Probability: ${(img.confidence * 100).toFixed(2)}%</p>
-      //     ${isAdmin ? `<button class="delete-btn" data-id="${img.id}">Delete</button>` : ''}
-      //   `;
-      //   gallery.appendChild(card);
-      // });
-
     } catch (err) {
       console.error(err);
       gallery.innerText = 'Failed to load images.';
     }
-  }//end of loadImages
+  }
 
+  // delete only available if admin
   console.log("Is admin:", isAdmin);
-  // Add click handler for delete buttons if admin
   if (isAdmin) {
     gallery.addEventListener("click", async (e) => {
       if (!e.target.classList.contains("delete-btn")) return;
@@ -122,7 +102,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // Navbar buttons
   document.getElementById("toLogin").addEventListener("click", () => { window.location.href = '/login.html'; });
   document.getElementById("toHome").addEventListener("click", () => { window.location.href = '/index.html'; });
-  document.getElementById("toDatabase").addEventListener("click", () => { window.location.href = '/database.html'; });
   document.getElementById("logoutBtn").addEventListener("click", () => {
     localStorage.removeItem("authToken");
     localStorage.removeItem("isAdmin");
