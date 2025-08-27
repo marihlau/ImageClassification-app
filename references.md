@@ -10,8 +10,8 @@ For the file listed, I took inspiration from a Youtube video: https://www.youtub
 
 - /public/css/home.css
 
-In the file listed, I got help from github copilot to make the correct functions
+In the file listed, I got some help from github copilot to make the correct functions for get, post, delete
 
 - app.js
 
-Copilot helped with some of the css files
+Copilot helped with some of the css files as well
