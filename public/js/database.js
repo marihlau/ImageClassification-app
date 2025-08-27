@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     try {
       console.log("Token being sent:", token);
-      const res = await fetch(`http://localhost:3000/uploads/`, {
+      const res = await fetch(`/uploads/`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
 
@@ -31,7 +31,7 @@ for (const img of images) {
   card.className = 'card';
 
   // Fetch image with token
-  const response = await fetch(`http://localhost:3000/uploads/${img.id}`, {
+  const response = await fetch(`/uploads/${img.id}`, {
     headers: { 'Authorization': `Bearer ${token}` }
   });
   const blob = await response.blob();
@@ -84,7 +84,7 @@ for (const img of images) {
       if (!confirm("Are you sure you want to delete this image?")) return;
         try{
             console.log("Auth token:", token, "deleting image with id:", id);
-            const url = `http://localhost:3000/images/${id}`;
+            const url = `/images/${id}`;
             console.log("Fetching URL:", url);
             const res = await fetch(url, {
               method: "DELETE",
