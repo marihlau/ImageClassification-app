@@ -6,7 +6,7 @@ const FormData = require('form-data');
 const SERVER_URL = 'http://localhost:3000';
 const USERNAME = 'CAB432';
 const PASSWORD = 'supersecret';
-const IMAGE_PATH = 'uploads/Skjermbilde 2025-08-27 kl. 14.40.32.png'; // replace with your sample image
+const IMAGE_PATH = 'uploads/Skjermbilde 2025-08-27 kl. 14.40.32.png'; 
 const DURATION_MINUTES = 5;
 
 async function getToken() {
