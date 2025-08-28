@@ -90,18 +90,6 @@ app.get("/", JWT.authenticateToken, (req, res) => {
    res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-// // Admin page requires admin permissions
-// app.get("/admin", JWT.authenticateToken, (req, res) => {
-//    const user = users[req.user.username];
-   
-//    if (!user || !user.admin) {
-//       console.log("Unauthorised user requested admin content.");
-//       return res.sendStatus(403);
-//    }
-
-//    res.sendFile(path.join(__dirname, "public", "admin.html"));
-// });
-
 //image upload and classification of image
 app.post('/uploads',JWT.authenticateToken, upload.single('image'), async (req, res) => {
   try{
