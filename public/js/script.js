@@ -3,9 +3,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const message = document.getElementById('message');
   const token = localStorage.getItem("authToken"); 
   const userStatus = document.getElementById("userStatus");
-  const admin = JSON.parse(localStorage.getItem("isAdmin")); 
   const logoutBtn = document.getElementById("logoutBtn");
   const loginBtn = document.getElementById("toLogin");
+  const admin = JSON.parse(localStorage.getItem("isAdmin"));
 
 //defining different functionality if admin/user/not logged in
     if (!token) {

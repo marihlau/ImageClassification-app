@@ -24,8 +24,8 @@ form.addEventListener("submit", async (e) => {
     if (!res.ok) throw new Error(data.error || "Signup failed");
 
     alert("✅ " + data.message);
-    window.location.href = "/index.html"; //going to home page after signup
-  } catch (err) { 
+    window.location.href = "/login.html"; //going to login page after signup
+  } catch (err) {
     alert("❌ " + err.message);
   }
 });
