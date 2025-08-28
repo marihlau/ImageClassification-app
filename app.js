@@ -197,33 +197,4 @@ app.delete('/uploads/:id', JWT.authenticateToken, async (req, res) => {
   }
 });
 
-// CPU stress test endpoint
-// app.get('/stress', async (req, res) => {
-//   try {
-//     const duration = 5 * 60 * 1000; // 5 minutes
-//     const startTime = Date.now();
-//     let iteration = 0;
-
-//     while (Date.now() - startTime < duration) {
-//       const a = tf.randomNormal([1500, 1500]);
-//       const b = tf.randomNormal([1500, 1500]);
-//       const c = tf.matMul(a, b); 
-//       c.dataSync(); 
-
-//       iteration++;
-
-//       await new Promise(resolve => setTimeout(resolve, 50));
-//       if (iteration % 10 === 0) {
-//       console.log(`Iteration ${iteration} completed`);
-//       }
-//     }
-
-//     res.json({ message: `CPU stress test completed`, iterations: iteration });
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json({ error: "Error during stress test" });
-//   }
-// });
-
-
 module.exports = app
