@@ -1,11 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
   const token = localStorage.getItem("authToken");
-  const isAdmin = JSON.parse(localStorage.getItem("isAdmin"));
   const gallery = document.getElementById('gallery');
   const logoutBtn = document.getElementById("logoutBtn");
   const loginBtn = document.getElementById("toLogin");
   const userStatus = document.getElementById("userStatus");
-  const admin = JSON.parse(localStorage.getItem("isAdmin")); 
+  const admin = JSON.parse(localStorage.getItem("isAdmin"));
 
 //defining different functionality if admin/user/not logged in
   if (!token) {
@@ -78,8 +77,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // delete button only available if admin
-  console.log("Is admin:", isAdmin);
-  if (isAdmin) {
+  //console.log("Is admin:", isAdmin);
+  if (admin) {
     gallery.addEventListener("click", async (e) => {
       if (!e.target.classList.contains("delete-btn")) return;
 

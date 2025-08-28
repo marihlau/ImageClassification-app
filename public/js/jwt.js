@@ -1,5 +1,4 @@
 const jwt = require("jsonwebtoken");
-
 const tokenSecret = process.env.JWT_SECRET || "supersecretkey";
 
 // Create a token with username, setting validity period
@@ -7,7 +6,7 @@ const generateAccessToken = (user) => {
    return jwt.sign(
       { username: user.username , isAdmin: user.isAdmin }, 
       tokenSecret, 
-      { expiresIn: "1h" });
+      { expiresIn: "2h" });
 };
 
 // Verify a token and respond with user information
