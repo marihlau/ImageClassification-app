@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <h3>${img.name}</h3>
           <p>Label: ${img.label}</p>
           <p>Probability: ${(img.confidence * 100).toFixed(2)}%</p>
-          ${isAdmin ? `<button class="delete-btn" data-id="${img.id}">Delete</button>` : ''}
+          ${admin ? `<button class="delete-btn" data-id="${img.id}">Delete</button>` : ''}
         `;
 
         gallery.appendChild(card);
@@ -77,7 +77,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // delete button only available if admin
-  //console.log("Is admin:", isAdmin);
   if (admin) {
     gallery.addEventListener("click", async (e) => {
       if (!e.target.classList.contains("delete-btn")) return;
