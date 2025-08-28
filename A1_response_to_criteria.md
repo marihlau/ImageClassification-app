@@ -6,7 +6,7 @@
 - **Student number:** n12541184
 - **Application name:** Image Classification
 - **Two line description:**
-  This is an application where you upload a photo, where a machine learning model classifies what it is a picture of. You can log in to see all the images and their classification. Admins can also delete uploaded images in addition to uploading their own.
+  This is an application where you upload a photo, where a machine learning model classifies what it is a picture of. You can log in to see all the images and their classification. Admins can also delete uploaded images in addition to uploading their own. The references.md is a refernce list to my project. 
 
 ## Core criteria
 
